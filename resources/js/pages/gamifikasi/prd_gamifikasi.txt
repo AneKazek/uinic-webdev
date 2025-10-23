@@ -1,0 +1,273 @@
+# PRD — Emotion Alchemist (v1)
+
+## 0. Ringkasan Eksekutif
+
+**Emotion Alchemist** adalah mini‑game kesehatan mental yang melatih **emotion labeling** dan **regulasi singkat** melalui metafora “mencampur ramuan”. Pemain mencampur 2–3 *essence* emosi → sistem menyarankan 3 **label emosi** terdekat → pemain memilih satu dan menjalankan **intervensi in‑app** (Breathe/Focus/Reframe) 30–60 detik → refleksi cepat (*ketegangan* sebelum→sesudah). Target sesi 2–3 menit, rasa **Duolingo‑style** (kartu, transisi halus), dengan **loop progres** yang tidak membosankan.
+
+**Sasaran rilis v1 (4–6 minggu):** Satu trek pelajaran (Chapter 1) dengan 6 essence, 12+ label, 3 intervensi, ekonomi XP sederhana, telemetry, dan keselamatan dasar.
+
+---
+
+## 1. Tujuan & Outcome
+
+* **Outcome pengguna (psikoedukatif):**
+
+  * ↑ kemampuan menamai emosi dengan spesifik (granularitas).
+  * ↓ ketegangan rata‑rata ≥ 2 poin setelah intervensi singkat.
+  * ↑ self‑efficacy: “aku bisa mengatur keadaan batin dalam 1–2 menit”.
+* **Outcome produk (bisnis/retensi):**
+
+  * Completion rate sesi Alchemist ≥ 80%.
+  * D7 retention untuk pemain Chapter 1 ≥ 25%.
+  * NPS fitur ≥ +20 (survei ringan in‑app).
+
+**North Star:** *Persentase sesi yang menghasilkan penurunan ketegangan ≥ 2 poin*.
+
+---
+
+## 2. Persona & Kebutuhan
+
+1. **Student Overthinker (18–24)** — sesi singkat di jeda belajar; ingin turun tegang cepat.
+2. **Young Professional (22–30)** — butuh *toolbox* emosional on‑demand, UI rapi, tak menghakimi.
+3. **First‑timer Mental Health** — butuh bahasa sederhana, aman, tidak memaksa cerita personal.
+
+Kebutuhan umum: cepat, privat, panduan jelas, progres terasa, tidak membuat rasa bersalah.
+
+---
+
+## 3. Ruang Lingkup (v1)
+
+**Masuk v1**
+
+* Mixer 2–3 essence (6 pilihan awal): Cemas, Sedih, Marah, Malu, Kecewa, Lelah.
+* Label suggestion (≥12 label) + autocomplete.
+* 3 intervensi in‑app: **Breathe 4‑4‑6**, **Focus Pop**, **Reframe 1‑kalimat**.
+* Refleksi ketegangan (0–10), XP & “resep emosi” (kosmetik kecil).
+* Telemetry, safety (Crisis button), *reduced motion*, mute.
+
+**Di luar v1**
+
+* Sosial/party, personalisasi ML, web3 badges, integrasi wearable.
+
+---
+
+## 4. User Stories (prioritas)
+
+* **US‑A1:** Sebagai pengguna, aku ingin mencampur 2–3 essence agar bisa mendekati rasaku saat ini dengan cepat.
+* **US‑A2:** Aku ingin sistem menyarankan 3 label terdekat agar tidak bingung memilih.
+* **US‑A3:** Aku ingin opsi intervensi singkat (≤60 dtk) yang cocok dengan kondisiku.
+* **US‑A4:** Aku ingin melihat perbedaan sebelum→sesudah agar merasa ada kemajuan.
+* **US‑A5:** Aku ingin UI yang ramah, tidak menghakimi, dan bisa dihentikan kapan saja.
+* **US‑A6:** Aku ingin progres & hadiah ringan tanpa paksaan (XP, resep, kosmetik).
+
+---
+
+## 5. Alur UX (Duolingo‑style)
+
+1. **Session Start (Primer)** → tombol **Mulai** + ❗Crisis.
+2. **Mixer** → slider 2–3 essence (Σ=100%), VA mini‑map, CTA **Lanjut → Beri Nama**.
+3. **Label Suggestions** → 3 kartu kandidat + autocomplete.
+4. **Intervention Hub** → tab Breathe / Focus / Reframe, rekomendasi otomatis.
+5. **Intervention Mode** → timer 30–60 dtk, kontrol *pause/exit*.
+6. **Reflection** → ketegangan sebelum→sesudah, ringkasan, XP.
+7. **Rewards** → “Resep”/kosmetik kecil; **Next Nudge** (opsional ulang 1 siklus).
+
+Durasi total: 120–180 detik.
+
+---
+
+## 6. Desain UI (Interaktif)
+
+**Gaya visual:** tema gelap (#0A0A0A), aksen **Indigo** (primer), **Emerald** (tenang), **Amber** (perhatian). Komponen rounded, bayangan lembut, *micro‑feedback* minimalis.
+
+**Komponen kunci**
+
+* **VA Mini‑Map**: kotak 160×160, titik • tween ke koordinat; *pulse* kecil saat stabil.
+* **Essence Slider**: snap 5%; haptic/klik audio halus tiap langkah; **Σ** & tombol *Normalize*.
+* **Label Card**: judul + definisi singkat + chip spektrum (Valence/Arousal); *expand on select*.
+* **Intervention Tabs**: rekomendasi default berdasarkan VA: arousal tinggi→Breathe; valence sangat rendah→Reframe; ambang impuls→Focus.
+* **Timer Ring**: lingkaran progres; *pause*; ARIA timer.
+* **Tension Slider**: 0–10; keyboard & tap, nilai terlihat.
+
+**Animasi** (Framer Motion)
+
+* Transisi kartu 160 ms (easeOutQuint). *Reduced motion* → fade 120 ms.
+* Partikel lembut saat *Normalize* & memilih label (<20 partikel/frame, GPU hemat).
+
+**Aksesibilitas**
+
+* Kontras ≥4.5:1; font ≥16 px; target sentuh ≥44×44.
+* ARIA untuk slider/timer; *live region* untuk hasil refleksi.
+* **Reduced Motion** & **Mute** global di header.
+
+---
+
+## 7. Game Logic (v1)
+
+### 7.1 Representasi Emosi
+
+* Tiap **essence** & **label** punya koordinat **Valence (V), Arousal (A)** ∈ [−1..+1].
+* **Mix** dihitung sebagai rata‑rata berbobot:
+  `V_mix = Σ(w_i * V_i)`, `A_mix = Σ(w_i * A_i)`, dengan `Σ w_i = 1`.
+
+### 7.2 Saran Label
+
+* Hitung jarak Euclidean `d = sqrt((V_mix - V_label)^2 + (A_mix - A_label)^2)`.
+* Urutkan label menurut `d`, ambil 3 teratas; jika jarak sangat dekat, jaga keragaman (heuristik: beda ≥0.15 pada salah satu sumbu, atau gunakan kandidat ke‑4/5).
+
+### 7.3 Rekomendasi Intervensi
+
+* Jika `A_mix ≥ +0.35` → **Breathe** default.
+* Jika `V_mix ≤ −0.55` → **Reframe** unggul.
+* Jika `0.15 ≤ A_mix ≤ 0.35` dan pemain sering salah fokus → **Focus**.
+* *Tie‑breakers*: pakai histori preferensi pemain & efektivitas terakhir (delta ketegangan).
+
+### 7.4 Scoring & Ekonomi (anti‑bosan)
+
+* **Granularity Score (0–2)**: label yang dipilih semakin spesifik (dari kosakata tingkat‑2) → +1; **override** label otomatis dengan yang lebih tepat → +1.
+* **Consistency Score (0–2)**: `score = clamp(2 − (d/0.5), 0, 2)`.
+* **Practice Bonus (0–2)**: selesaikan intervensi (≥30 dtk) → +1; >45 dtk → +2.
+* **XP** = jumlah skor + *novelty bonus* (+1 jika kombinasi mix belum pernah).
+* **Rewards**: “Resep Emosi” (kosmetik ikon/tema) dibuka berdasar kombinasi baru, **bukan** gacha.
+
+### 7.5 Adaptasi Kesulitan
+
+* Jika 3 sesi berturut ketegangan turun <2 → tawarkan **guided path** (preset mix + label edukatif) & intervensi berbeda.
+* Jika 2 sesi berturut **d ≥ 0.35** → tampilkan *hint* label.
+
+---
+
+## 8. Konten v1
+
+**Essence**: Cemas, Sedih, Marah, Malu, Kecewa, Lelah.
+**Label** (contoh 12): Gelisah, Panik, Murung, Kesal, Marah Besar, Kecewa, Putus Asa, Terganggu, Canggung, Pasrah, Tenang, Lega.
+**Definisi**: satu kalimat netral untuk tiap label.
+**Intervensi**: Breathe (4‑4‑6, 3 siklus), Focus Pop (30 dtk), Reframe 1‑kalimat (template/edit ≤120 char).
+
+**Nada bahasa:** hangat, validatif, non‑stigma; hindari “selalu/semua/harus”.
+
+---
+
+## 9. Metrik & Telemetri
+
+* **Granularitas**: porsi label tingkat‑2 dari total sesi.
+* **Consistency**: jarak rata‑rata `d` ke label terpilih.
+* **Efektivitas**: median `tension_before − tension_after`.
+* **Engagement**: completion rate, durasi, % pilih intervensi.
+* **Retention**: D1/D7 per kohort.
+* **Safety**: jumlah *tension_before ≥ 9*; CTR Crisis.
+
+**Event (contoh):** `mix_open`, `mix_change`, `mix_normalize`, `label_pick`, `label_override`, `intervention_start/{breathe|focus|reframe}`, `intervention_finish`, `reflect_submit`, `reward_granted`.
+
+---
+
+## 10. Keamanan & Privasi
+
+* **Crisis button** selalu terlihat; sheet bantuan lokal.
+* **Data personal opsional**; default pakai konten generik. Jika ada teks personal (reframe), enkripsi saat simpan.
+* **Guard**: jika *tension_before ≥ 9* dua kali berturut, munculkan rujukan profesional (tanpa mengunci).
+* **Tanpa dark pattern**: tidak ada penalti keras untuk absen; *skip token* mingguan di level akun (fitur global, terlihat di Reward screen).
+
+---
+
+## 11. Persyaratan Non‑Fungsional
+
+* **Performa**: TTI < 2.5 s pada koneksi 4G; asset < 1.5 MB untuk first‑load Alchemist.
+* **Kesesuaian perangkat**: mobile first (portrait), mendukung layar kecil 360×640 hingga tablet; desktop melalui letterbox.
+* **Aksesibilitas**: keyboard‑navigable; ARIA; *reduced motion*; kontras.
+* **Offline**: sesi dapat berjalan lokal; sinkronisasi saat online.
+
+---
+
+## 12. Arsitektur & Teknologi
+
+* **Frontend**: React + Tailwind + Framer Motion + XState (lesson flow).
+* **Game arcade opsional**: Phaser hanya untuk Focus Pop (bisa React‑only juga).
+* **Backend**: Laravel API; **Supabase** (auth, DB, RLS).
+
+**Tabel kunci**
+
+* `alchemist_sessions(id, user_id, va_x, va_y, essence_json, label_key, distance, tension_before, tension_after, intervention_kind, duration_sec, xp_gain, created_at)`
+* `emotion_labels(key, name, valence, arousal, definition)`
+* `user_rewards(user_id, reward_key, unlocked_at)`
+
+**API**
+
+* `POST /alchemist/mix` → input essence → kembalikan 3 label kandidat (server‑side untuk konsistensi).
+* `POST /alchemist/finish` → simpan refleksi, XP, reward.
+
+---
+
+## 13. UI Spesifik (Blueprint)
+
+**Header**: judul “Emotion Alchemist” + ❗Crisis + ikon mute + toggle *reduced motion*.
+
+**Mixer**
+
+* Slider list (maks 3 aktif) + tombol [+ Tambah essence].
+* Tombol **Normalize ke 100%**; disabled bila Σ=100.
+* Mini‑map VA; koordinat teks kecil (opsional).
+* CTA **Lanjut → Beri Nama**; disabled bila Σ≠100 atau <2 essence.
+
+**Label**
+
+* 3 kartu kandidat; setiap kartu: nama, definisi, chip spektrum, tombol **Pilih**.
+* Autocomplete input; daftar 6 label; memilih item langsung lanjut.
+
+**Intervention Hub**
+
+* Tab; rekomendasi default dengan *badge* “Direkomendasikan”.
+* Ring timer besar; deskripsi singkat & manfaat.
+* Tombol **Mulai** dan **Keluar**.
+
+**Reflection**
+
+* Slider *ketegangan* sebelum→sesudah.
+* Ringkasan; tombol **Selesai**.
+
+**Reward**
+
+* XP naik (progress bar kecil), “Resep Emosi” baru (ikon), CTA **Ulangi** / **Kembali ke Lab**.
+
+---
+
+## 14. Uji & Penerimaan (Acceptance Criteria)
+
+* [ ] Dapat mencampur 2–3 essence, Σ normalisasi ke 100%.
+* [ ] Sistem menyarankan 3 label terdekat dan menerima override pengguna.
+* [ ] Minimal 1 intervensi selesai dalam ≤60 dtk dengan kontrol *pause/exit*.
+* [ ] Reflection menampilkan delta ketegangan dan menyimpan ke DB.
+* [ ] XP dan minimal 1 reward kosmetik terbuka pada kombinasi baru.
+* [ ] A11y: semua langkah bisa keyboard‑only; kontras lulus WCAG AA.
+* [ ] Safety: Crisis button terlihat di setiap layar; guard untuk distress tinggi aktif.
+* [ ] Telemetry event terkirim untuk 90%+ sesi dengan latensi <300 ms.
+
+---
+
+## 15. Roadmap & Estimasi (6 minggu)
+
+**M1:** UX skeleton + Mixer & Label (front) + daftar label/essence (backend).
+**M2:** Breathe & TimerRing; telemetry dasar; safety header.
+**M3:** Focus Pop (React‑only) + scoring; Rewards (XP/resep).
+**M4:** Reframe 1‑kalimat + rules checker; polishing animasi; a11y pass.
+**M5:** API `/alchemist/finish`, DB persistensi; offline cache; bug bash.
+**M6:** Tuning heuristik rekomendasi; A/B microcopy; prepare launch.
+
+---
+
+## 16. Risiko & Mitigasi
+
+* **Kebosanan (variasi rendah):** rotasi *theme skin* & “resep emosi” mingguan; novelty bonus.
+* **Over‑stimulation:** *reduced motion* & mute; batas partikel & SFX.
+* **Kesalahan label:** jelaskan “tidak harus sempurna”; izinkan override; tampilkan alternatif.
+* **Privasi:** default konten generik; enkripsi bila ada teks personal.
+
+---
+
+## 17. Lampiran
+
+* **Koordinat VA** untuk 6 essence & 12+ label (revisi oleh psikolog).
+* **Microcopy bank** (helper, reward, safety).
+* **Skema event analytics** (parameter & contoh payload).
+
+> Dokumen ini menjadi acuan desain, dev, konten, dan QA untuk rilis **Emotion Alchemist v1**. Semua istilah mengikuti gaya bahasa Indonesia yang hangat dan non‑stigma; spesifikasi dapat dituning berdasarkan uji coba internal & pilot kecil.
