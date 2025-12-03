@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Http\Controllers\Auth\SupabaseAuthService;
 
 class PasswordResetLinkController extends Controller
 {
@@ -32,9 +33,8 @@ class PasswordResetLinkController extends Controller
             'email' => 'required|email',
         ]);
 
-        Password::sendResetLink(
-            $request->only('email')
-        );
+        $service = new SupabaseAuthService();
+        $service->sendPasswordReset($request->email, url('/reset-password/supabase'));
 
         return back()->with('status', __('A reset link will be sent if the account exists.'));
     }

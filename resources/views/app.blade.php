@@ -31,6 +31,7 @@
         </style>
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -38,10 +39,14 @@
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+        <link rel="preconnect" href="https://d35aaqx5ub95lt.cloudfront.net" crossorigin>
+        <link rel="dns-prefetch" href="//d35aaqx5ub95lt.cloudfront.net">
+        <link rel="preconnect" href="https://slelguoygbfzlpylpxfs.supabase.co" crossorigin>
+        <link rel="dns-prefetch" href="//slelguoygbfzlpylpxfs.supabase.co">
 
         @viteReactRefresh
         @routes
-        @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
+        @vite(['resources/js/app.tsx'])
         @inertiaHead
     </head>
     <body class="font-sans antialiased">

@@ -1,0 +1,19 @@
+/* Floating and hover bob animations for landing decorative elements and CTAs */
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: floatY 3s ease-in-out infinite;
+}
+
+@keyframes bobY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.hover-bob:hover {
+  animation: bobY 1.8s ease-in-out infinite;
+}

@@ -2,6 +2,8 @@
 
 @import "tw-animate-css";
 
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap');
+
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
@@ -140,4 +142,40 @@
     body {
         @apply bg-background text-foreground;
     }
+}
+
+/* Additional theme color mappings for codedex components */
+@theme {
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-secondary-background: var(--secondary-background);
+  --color-accent-blue: var(--accent-blue);
+  --color-success: var(--success);
+}
+
+:root {
+  --text-primary: #e6e9ff;
+  --text-secondary: #a8b2d1;
+  --secondary-background: #0f1729;
+  --accent-blue: #00a6ff;
+  --success: #00e195;
+}
+
+.dark {
+  --text-primary: #e6e9ff;
+  --text-secondary: #a8b2d1;
+  --secondary-background: #0f1729;
+  --accent-blue: #00a6ff;
+  --success: #00e195;
+}
+
+/* Utility to use codedex accent font */
+.font-accent {
+  font-family: 'Space Grotesk', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Override token khusus untuk halaman missions agar identik dengan referensi */
+.missions-ref-theme {
+  --ring: oklch(0.708 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }

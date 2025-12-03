@@ -13,6 +13,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Http\Controllers\Auth\SupabaseAuthService;
 
 class NewPasswordController extends Controller
 {
@@ -23,7 +24,7 @@ class NewPasswordController extends Controller
     {
         return Inertia::render('auth/reset-password', [
             'email' => $request->email,
-            'token' => $request->route('token'),
+            'token' => $request->query('access_token') ?? $request->route('token'),
         ]);
     }
 
@@ -36,34 +37,19 @@ class NewPasswordController extends Controller
     {
         $request->validate([
             'token' => 'required',
-            'email' => 'required|email',
+            'email' => 'nullable|email',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // Here we will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (User $user) use ($request) {
-                $user->forceFill([
-                    'password' => $request->password,
-                    'remember_token' => Str::random(60),
-                ])->save();
+        $service = new SupabaseAuthService();
+        $updated = $service->updatePassword($request->token, $request->password);
 
-                event(new PasswordReset($user));
-            }
-        );
-
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
-        if ($status == Password::PasswordReset) {
-            return to_route('login')->with('status', __($status));
+        if ($updated) {
+            return to_route('login')->with('status', __('passwords.reset'));
         }
 
         throw ValidationException::withMessages([
-            'email' => [__($status)],
+            'email' => [__('passwords.token')],
         ]);
     }
 }

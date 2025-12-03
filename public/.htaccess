@@ -5,6 +5,20 @@
 
     RewriteEngine On
 
+    # Prefer precompressed Brotli assets when available
+    RewriteCond %{HTTP:Accept-Encoding} br
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteCond %{REQUEST_FILENAME} \.(css|js|svg|json|xml)$
+    RewriteCond %{REQUEST_FILENAME}.br -f
+    RewriteRule ^(.*)$ $1.br [QSA]
+
+    # Fallback to precompressed gzip assets when Brotli not supported
+    RewriteCond %{HTTP:Accept-Encoding} gzip
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteCond %{REQUEST_FILENAME} \.(css|js|svg|json|xml)$
+    RewriteCond %{REQUEST_FILENAME}.gz -f
+    RewriteRule ^(.*)$ $1.gz [QSA]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -22,4 +36,28 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+</IfModule>
+
+# Content types and encodings for precompressed assets
+<IfModule mod_mime.c>
+    AddType text/css .css .css.br .css.gz
+    AddType application/javascript .js .js.br .js.gz
+    AddType image/svg+xml .svg .svg.br .svg.gz
+    AddType application/json .json .json.br .json.gz
+    AddType application/xml .xml .xml.br .xml.gz
+    AddEncoding br .br
+    AddEncoding gzip .gz
+</IfModule>
+
+# Cache static assets aggressively (immutable)
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|svg|json|xml|woff|woff2|jpg|jpeg|png|gif|webp)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    <FilesMatch "\.(css|js|svg|json|xml)\.br$">
+        Header set Content-Encoding br
+    </FilesMatch>
+    <FilesMatch "\.(css|js|svg|json|xml)\.gz$">
+        Header set Content-Encoding gzip
+    </FilesMatch>
 </IfModule>

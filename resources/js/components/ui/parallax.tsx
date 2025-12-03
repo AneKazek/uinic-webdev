@@ -1,0 +1,1 @@
+export { ParallaxLayer } from '../components/ui/parallax';

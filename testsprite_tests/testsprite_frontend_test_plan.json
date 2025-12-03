@@ -1,0 +1,479 @@
+[
+  {
+    "id": "TC001",
+    "title": "User Registration Success",
+    "description": "Verify user can successfully register with valid information and receive email verification prompt.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to registration page"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid username, email, and password"
+      },
+      {
+        "type": "action",
+        "description": "Submit registration form"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm registration success message is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify email verification instructions are sent"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "User Registration with Invalid Email",
+    "description": "Ensure registration is rejected when an invalid email format is submitted.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to registration page"
+      },
+      {
+        "type": "action",
+        "description": "Enter invalid email format along with other required fields"
+      },
+      {
+        "type": "action",
+        "description": "Submit registration form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify error message specifying invalid email format is displayed"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "User Login Success",
+    "description": "Verify that a user can login successfully with correct credentials.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to login page"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid username/email and password"
+      },
+      {
+        "type": "action",
+        "description": "Submit login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm user is redirected to the dashboard"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "User Login Failure with Incorrect Password",
+    "description": "Verify login fails and an appropriate error message is displayed when an incorrect password is entered.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to login page"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid username/email and incorrect password"
+      },
+      {
+        "type": "action",
+        "description": "Submit login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify error message indicating incorrect credentials"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Two-Factor Authentication (2FA) Setup and Verification",
+    "description": "Ensure user can enable 2FA, receive recovery codes, and successfully complete the 2FA challenge on login.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login to account and navigate to 2FA settings page"
+      },
+      {
+        "type": "action",
+        "description": "Enable two-factor authentication and save recovery codes"
+      },
+      {
+        "type": "action",
+        "description": "Logout and initiate login again"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid credentials"
+      },
+      {
+        "type": "action",
+        "description": "Complete the 2FA challenge using 2FA app or recovery code"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify successful login and access to dashboard"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Password Recovery and Reset Flow",
+    "description": "Verify password recovery email request and successful password reset with validation.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to forgot password page"
+      },
+      {
+        "type": "action",
+        "description": "Submit registered email for password recovery"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify password reset email is sent"
+      },
+      {
+        "type": "action",
+        "description": "Click password reset link and enter new valid password"
+      },
+      {
+        "type": "action",
+        "description": "Submit password reset form"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm password reset success and ability to login with new password"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Dashboard Displays Dynamic Content Correctly",
+    "description": "Ensure the dashboard loads and correctly renders journaling cards, mood charts, chatbot, and progress indicators.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login successfully and navigate to dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm journaling cards are visible and updated"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify mood tracking charts reflect user data accurately"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that mental health chatbot interface is loaded and responsive"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate progress indicators like XP and streaks are displayed correctly"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Journal Entry Creation and Mood Tracking",
+    "description": "Verify users can create daily journal entries and mood tags, and that entries persist correctly.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to journal page"
+      },
+      {
+        "type": "action",
+        "description": "Create a new journal entry with text and mood selection"
+      },
+      {
+        "type": "action",
+        "description": "Save the journal entry"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm entry appears in journal list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify mood tracking charts update to include new entry"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Mental Health Chatbot Interaction",
+    "description": "Validate chatbot responds appropriately to user input and handles multiple concurrent sessions.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open mental health chatbot from dashboard"
+      },
+      {
+        "type": "action",
+        "description": "Send various support queries to chatbot"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify relevant and contextually appropriate bot responses are received"
+      },
+      {
+        "type": "action",
+        "description": "Open multiple chatbot sessions in separate tabs or windows"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm chatbot responses remain stable and UI performance is unaffected"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Gamification Progress Updates - XP, Streaks, and Achievements",
+    "description": "Test that XP increases, streaks count correctly, and achievements unlock as expected when users complete activities.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Perform activities that grant XP such as journaling and chatbot usage"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify XP total reflects activities accurately"
+      },
+      {
+        "type": "action",
+        "description": "Complete activities daily to build streak"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm streak count increments correctly"
+      },
+      {
+        "type": "action",
+        "description": "Trigger conditions to unlock achievements"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate achievements are unlocked and displayed"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Mentoring Hub Content Navigation and Progression",
+    "description": "Verify multi-level mentoring content loads with correct gamified UI state and user progression is tracked.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to mentoring hub"
+      },
+      {
+        "type": "action",
+        "description": "Access multiple mentoring levels and verify content loads"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm UI elements reflect current level and progression"
+      },
+      {
+        "type": "action",
+        "description": "Complete mentoring tasks and missions"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify progress is updated and next levels unlock accordingly"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Cognitive Behavioral Therapy (CBT) Game Interaction",
+    "description": "Ensure CBT game components such as avatar selection and battle encounters function correctly and game state persists.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Start CBT game and select avatar"
+      },
+      {
+        "type": "action",
+        "description": "Engage in a battle encounter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify correct game responses and avatar animations"
+      },
+      {
+        "type": "action",
+        "description": "Exit and restart game"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm that game state and user progress are restored accurately"
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Shop and Leaderboard Data Loading and Interaction",
+    "description": "Verify that shop items and user leaderboard rankings load correctly and reflect real-time data.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to shop page and load available items"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm all shop items display with correct pricing and availability"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to leaderboard page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify user rankings and leaderboard data reflect current XP and achievements"
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "User Profile and Settings Update Persistency",
+    "description": "Validate that changes to user profile, appearance, and password settings persist and update UI in real-time.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to profile settings and update profile information"
+      },
+      {
+        "type": "action",
+        "description": "Change appearance preferences and save"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm profile and appearance updates are reflected in UI"
+      },
+      {
+        "type": "action",
+        "description": "Change password with valid current and new credentials"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify password change success message and ability to login with new password"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Routing and Navigation Consistency",
+    "description": "Ensure top navigation, app shell, sidebar, and routing provide seamless and accessible navigation with no dead links.",
+    "category": "ui",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate through all main pages via top navigation and sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm pages load without errors and URLs are updated correctly"
+      },
+      {
+        "type": "action",
+        "description": "Test wayfinding helpers for routing between modules"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no broken or dead links exist and navigation is keyboard accessible"
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "UI Component Accessibility and Consistency",
+    "description": "Verify reusable UI components meet accessibility standards and render with consistent styling across device types and screen sizes.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Render key UI components including buttons, cards, dialogs, accordions, and tabs"
+      },
+      {
+        "type": "assertion",
+        "description": "Check components for correct aria attributes and keyboard navigation support"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate consistent styling on desktop, tablet, and mobile resolutions"
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "System Deployment on Vercel with Environment Variable Handling",
+    "description": "Confirm that the system deploys successfully on Vercel serverless architecture, loads environment variables correctly, and performs optimally under load.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Deploy latest build to Vercel with defined environment variables"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify deployment completes without errors"
+      },
+      {
+        "type": "assertion",
+        "description": "Check environment variables are available and used as expected"
+      },
+      {
+        "type": "action",
+        "description": "Perform load testing simulating multiple concurrent users"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm application remains responsive and error-free under load"
+      }
+    ]
+  }
+]

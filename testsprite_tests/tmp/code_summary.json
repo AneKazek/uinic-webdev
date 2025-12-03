@@ -1,0 +1,151 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "React",
+    "Vite",
+    "Laravel",
+    "PHP",
+    "Tailwind CSS",
+    "Supabase"
+  ],
+  "features": [
+    {
+      "name": "Authentication",
+      "description": "Complete auth flow including login, register, password reset, email verification, and two-factor challenge integrated with Fortify-like client actions.",
+      "files": [
+        "resources/js/pages/auth/login.tsx",
+        "resources/js/pages/auth/register.tsx",
+        "resources/js/pages/auth/forgot-password.tsx",
+        "resources/js/pages/auth/reset-password.tsx",
+        "resources/js/pages/auth/verify-email.tsx",
+        "resources/js/pages/auth/confirm-password.tsx",
+        "resources/js/pages/auth/two-factor-challenge.tsx",
+        "resources/js/actions/App/Http/Controllers/Auth/AuthenticatedSessionController.ts",
+        "resources/js/actions/App/Http/Controllers/Auth/RegisteredUserController.ts",
+        "resources/js/actions/Laravel/Fortify/Http/Controllers/TwoFactorAuthenticatedSessionController.ts"
+      ]
+    },
+    {
+      "name": "Two-Factor Authentication",
+      "description": "2FA setup and recovery codes with UI modals and controller endpoints.",
+      "files": [
+        "resources/js/pages/settings/two-factor.tsx",
+        "resources/js/components/two-factor-setup-modal.tsx",
+        "resources/js/components/two-factor-recovery-codes.tsx",
+        "resources/js/hooks/use-two-factor-auth.ts",
+        "resources/js/actions/Laravel/Fortify/Http/Controllers/TwoFactorAuthenticationController.ts",
+        "resources/js/actions/Laravel/Fortify/Http/Controllers/RecoveryCodeController.ts"
+      ]
+    },
+    {
+      "name": "Dashboard & Navigation",
+      "description": "Main dashboard with top navigation, app shell, and route registries.",
+      "files": [
+        "resources/js/pages/dashboard.tsx",
+        "resources/js/components/dashboard-top-nav.tsx",
+        "resources/js/components/app-shell.tsx",
+        "resources/js/components/app-header.tsx",
+        "resources/js/components/app-sidebar.tsx",
+        "resources/js/routes/index.ts",
+        "resources/js/wayfinder/index.ts"
+      ]
+    },
+    {
+      "name": "Profile & Settings",
+      "description": "User profile and settings pages for appearance and password management with charts.",
+      "files": [
+        "resources/js/pages/profile/index.tsx",
+        "resources/js/pages/profile/components/MoodChart.tsx",
+        "resources/js/pages/settings/profile.tsx",
+        "resources/js/pages/settings/appearance.tsx",
+        "resources/js/pages/settings/password.tsx",
+        "resources/js/layouts/settings/layout.tsx",
+        "resources/js/actions/App/Http/Controllers/Settings/ProfileController.ts",
+        "resources/js/actions/App/Http/Controllers/Settings/PasswordController.ts"
+      ]
+    },
+    {
+      "name": "Journal",
+      "description": "Personal journal area with entries and UI kit components.",
+      "files": [
+        "resources/js/pages/journal/index.tsx",
+        "resources/js/components/ui/textarea.tsx",
+        "resources/js/components/ui/button.tsx"
+      ]
+    },
+    {
+      "name": "Mental Health Chat",
+      "description": "Chat interface backed by client-side controller for mental health conversations.",
+      "files": [
+        "resources/js/pages/mental-health-chat/index.tsx",
+        "resources/js/actions/App/Http/Controllers/MentalHealthChatController.ts",
+        "resources/js/components/ui/input.tsx",
+        "resources/js/components/ui/card.tsx"
+      ]
+    },
+    {
+      "name": "Mentoring & Levels",
+      "description": "Mentoring hub with multi-level content, shared layouts, and gamified components.",
+      "files": [
+        "resources/js/pages/mentoring/index.tsx",
+        "resources/js/pages/mentoring/levels/LevelLayout.tsx",
+        "resources/js/pages/mentoring/levels/useLevelState.ts",
+        "resources/js/pages/mentoring/levels/level-1.tsx",
+        "resources/js/pages/mentoring/levels/level-2.tsx",
+        "resources/js/pages/mentoring/components/gamification/PixiCanvas.tsx"
+      ]
+    },
+    {
+      "name": "CBT Game",
+      "description": "Cognitive behavioral therapy game components and data.",
+      "files": [
+        "resources/js/components/cbt-game/CBTGameContainer.tsx",
+        "resources/js/components/cbt-game/BattleEncounter.tsx",
+        "resources/js/components/cbt-game/AvatarSelection.tsx",
+        "resources/js/lib/cbt-game-data.ts"
+      ]
+    },
+    {
+      "name": "Shop & Leaderboard",
+      "description": "Commerce and social ranking pages.",
+      "files": [
+        "resources/js/pages/shop/index.tsx",
+        "resources/js/pages/leaderboard/index.tsx"
+      ]
+    },
+    {
+      "name": "UI System",
+      "description": "Reusable UI kit components for inputs, overlays, navigation, animations, and data display.",
+      "files": [
+        "resources/js/components/ui/button.tsx",
+        "resources/js/components/ui/card.tsx",
+        "resources/js/components/ui/dialog.tsx",
+        "resources/js/components/ui/accordion.tsx",
+        "resources/js/components/ui/tabs.tsx",
+        "resources/js/components/ui/tooltip.tsx",
+        "resources/js/components/ui/avatar.tsx",
+        "resources/js/components/components/ui/form.tsx"
+      ]
+    },
+    {
+      "name": "Routing & Wayfinding",
+      "description": "Route registries for domain modules and wayfinding helper.",
+      "files": [
+        "resources/js/routes/api/index.ts",
+        "resources/js/routes/login/index.ts",
+        "resources/js/routes/password/index.ts",
+        "resources/js/routes/two-factor/index.ts",
+        "resources/js/routes/profile/index.ts",
+        "resources/js/wayfinder/index.ts"
+      ]
+    },
+    {
+      "name": "Data & Clients",
+      "description": "Supabase client and crypto utilities.",
+      "files": [
+        "resources/js/lib/supabaseClient.ts",
+        "resources/js/lib/crypto.ts"
+      ]
+    }
+  ]
+}

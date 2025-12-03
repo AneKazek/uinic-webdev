@@ -1,0 +1,18 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:8000",
+  "loginUser": "admintest@mindpath.com",
+  "loginPassword": "12345678",
+  "executionArgs": {
+    "projectName": "uinic-webdev",
+    "projectPath": "e:\\BACKUP DRIVE D\\Kerjaan\\Lomba\\UINIC 7.0\\uinic-webdev",
+    "testIds": [],
+    "additionalInstruction": "",
+    "envs": {
+      "API_KEY": "sk-user-tcSdMd59wutmb0qgCTnuC_MH_jk-WCtAO8IWSp_xhiZYRSx6QBitxDFOVXfem5m2PL1pzahClD6s0Hoh20uFtDOAqr8tBlUwiGgjrkRucjGfq066uDZip-TklL-EmzfZXEY"
+    }
+  },
+  "proxy": "http://fcfe6399-6986-4215-a558-28e75edb94bf:v83LbWuJok3GyiRpkYxansPc7hVWWLtg@tun.testsprite.com:8080"
+}
